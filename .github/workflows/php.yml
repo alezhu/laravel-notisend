@@ -9,31 +9,131 @@ on:
 permissions:
   contents: read
 
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ ubuntu-latest ]
+        php-versions: [ '8.2', '8.3','8.4','8.5' ]
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
 
-    - name: Run test suite
-      run: composer run-script test
+      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+      # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+      - name: Run test suite
+        run: composer run-script test
+
+#-----------------------------------------------------------------------------------------
+  coverage:
+    if: ${{ always() }}
+    needs: [build]
+
+    permissions:
+      contents: write
+
+    env:
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+      # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+      - name: Run test suite
+        run: composer run-script coverage
+
+
+
+      # Шаг 2: Проверяем существование целевой ветки
+      - name: Check if code_coverage_bages branch exists
+        id: check_branch
+        run: |
+          git fetch origin --quiet
+          if git rev-parse --verify refs/remotes/origin/code_coverage_bages >/dev/null 2>&1; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi          
+
+      # Создаем ветку code_coverage_bages, если её нет
+      - name: Create code_coverage_bages branch if Not Exists
+        if: env.branch_exists == 'false'
+        run: |
+          git checkout --orphan code_coverage_bages
+          git rm -rf .
+          echo "Created new branch: code_coverage_bages"   
+
+      # Шаг 4: Переключаемся на целевую ветку
+      - name: Switch to Target Branch
+        if: env.branch_exists == 'true'
+        run: git checkout code_coverage_bages
+
+      - name: Make code coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          report: coverage/coverage.xml
+          coverage_badge_path: coverage/coverage.${{ env.BRANCH_NAME }}.svg
+          push_badge: false
+
+      # Шаг 6: Коммитим изменения
+      - name: Commit Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add coverage/coverage.${{ env.BRANCH_NAME }}.svg
+          git commit -m "Update coverage/coverage.${{ env.BRANCH_NAME }}.svg via GitHub Actions" || exit 0
+
+      # Шаг 7: Пушим изменения в целевую ветку
+      - name: Push Changes
+        run: |
+          git push origin code_coverage_bages --force

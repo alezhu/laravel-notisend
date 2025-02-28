@@ -17,3 +17,4 @@ composer.phar
 /.idea/phpspec.xml
 /.idea/vagrant.xml
 /.idea/vcs.xml
+/.phpunit.cache
