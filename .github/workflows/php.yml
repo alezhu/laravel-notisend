@@ -37,3 +37,18 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+
+    - name: Make code coverage badge
+      uses: timkrase/phpunit-coverage-badge@v1.2.1
+      with:
+        coverage_badge_path: coverage/coverage.svg
+        push_badge: false
+
+    - name: Git push to image-data branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        publish_dir: ./coverage
+        publish_branch: code_coverage_bages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'

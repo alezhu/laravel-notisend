@@ -46,7 +46,7 @@
   },
   "scripts": {
     "test": "@php vendor/bin/phpunit tests",
-    "coverage": "@test --coverage-html coverage --coverage-clover coverage.xml",
+    "coverage": "@test --coverage-html coverage --coverage-clover coverage/coverage.xml",
     "php-version": "@php --version"
   },
   "extra": {
