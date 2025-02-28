@@ -1,0 +1,59 @@
+{
+  "name": "alezhu/laravel-notisend",
+  "description": "Laravel email transport implementation via Notisend",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "laravel",
+    "notisend",
+    "package",
+    "email"
+  ],
+  "authors": [
+    {
+      "name": "Alexandr Zhuravlev",
+      "homepage": "https://github.com/alezhu",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Alezhu\\LaravelNotisend\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Alezhu\\LaravelNotisend\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "ext-json": "*",
+    "illuminate/mail": "^12.0",
+    "illuminate/http": "^12.0"
+  },
+  "require-dev": {
+    "alezhu/phpunit-array-contains-asserts": "^10.0",
+    "fakerphp/faker": "^1.24",
+    "mockery/mockery": "^1.6",
+    "phpoption/phpoption": "^1.9",
+    "phpunit/phpunit": "^12.0",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": "@php vendor/bin/phpunit tests",
+    "coverage": "@test --coverage-html coverage --coverage-clover coverage.xml",
+    "php-version": "@php --version"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Alezhu\\LaravelNotisend\\NotisendServiceProvider"
+      ]
+    }
+  }
+}
