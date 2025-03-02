@@ -3,6 +3,7 @@
 [Notisend](https://notisend.ru) Laravel driver
 
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
+[![Code coverage](../code_coverage_bages/coverage/coverage.main.svg)](../code_coverage_bages/coverage/coverage.main.svg)
 
 # Table of Contents
 
