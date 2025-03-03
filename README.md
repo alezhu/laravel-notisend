@@ -124,7 +124,7 @@ class ExampleTestManual extends TestCase
 }
 ```
 
-Please refer to [Laravel Mail documenation](https://laravel.com/docs/12.x/mail)
+Please refer to [Laravel Mail documenation](https://laravel.com/docs/11.x/mail)
 and [NotiSend API documentation](https://notisend.ru/dev/email/api/) for more information.
 
 <a name="support-and-feedback"></a>
