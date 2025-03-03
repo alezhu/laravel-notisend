@@ -10,7 +10,7 @@
 [![PHP Version Require](https://poser.pugx.org/alezhu/laravel-notisend/require/php)](https://packagist.org/packages/alezhu/laravel-notisend)
 ![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-11)
 [![Packagist Stars](https://img.shields.io/packagist/stars/alezhu/laravel-notisend)](https://packagist.org/packages/alezhu/laravel-notisend)
-
+[![CI](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml/badge.svg?branch=laravel-11)](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml)
 
 # Table of Contents
 
