@@ -2,14 +2,14 @@
 
 [Notisend](https://notisend.ru) Laravel driver
 
+
 [![License](https://poser.pugx.org/alezhu/laravel-notisend/license)](https://packagist.org/packages/alezhu/laravel-notisend) 
-[![Code coverage](../code_coverage_bages/coverage/coverage.main.svg)](../code_coverage_bages/coverage/coverage.main.svg)
-[![Latest Stable Version](https://poser.pugx.org/alezhu/laravel-notisend/v)](https://packagist.org/packages/alezhu/laravel-notisend) 
+[![Code coverage](../code_coverage_bages/coverage/coverage.laravel-11.svg)](../code_coverage_bages/coverage/coverage.main.svg)
+![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?filter=v11*&label=version)
 [![Total Downloads](https://poser.pugx.org/alezhu/laravel-notisend/downloads)](https://packagist.org/packages/alezhu/laravel-notisend) 
-[![Latest Unstable Version](https://poser.pugx.org/alezhu/laravel-notisend/v/unstable)](https://packagist.org/packages/alezhu/laravel-notisend) 
 [![PHP Version Require](https://poser.pugx.org/alezhu/laravel-notisend/require/php)](https://packagist.org/packages/alezhu/laravel-notisend)
-![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/main)
-![Packagist Stars](https://img.shields.io/packagist/stars/alezhu/laravel-notisend)
+![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-11)
+[![Packagist Stars](https://img.shields.io/packagist/stars/alezhu/laravel-notisend)](https://packagist.org/packages/alezhu/laravel-notisend)
 
 
 # Table of Contents
@@ -25,18 +25,18 @@
 
 ## Requirements
 
-- Laravel 12.0+
+- Laravel 11.0
 - PHP 8.2+
 - An API Key from [Notisend](https://app.notisend.ru/mailer/automation/api/messages)
 
-**For Laravel version below 12 see corresponding branches**
+**For Laravel version below 11 see corresponding branches**
 
 ## Setup
 
 You can install the package via composer:
 
 ```bash
-composer require alezhu/laravel-notisend
+composer require alezhu/laravel-notisend:^11 
 ```
 
 After that, you need to set `NOTISEND_API_TOKEN` in your `.env` file:
@@ -51,7 +51,7 @@ And set environment variable `MAIL_MAILER` in your `.env` file
 MAIL_MAILER=mailersend
 ```
 
-You can leave the default driver value and use 'notisend' via:
+Or you can leave the default driver value and use 'notisend' via:
 
 ```php
 $mailer = Mail::mailer('notisend');
