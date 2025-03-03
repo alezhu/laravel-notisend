@@ -23,7 +23,10 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '8.2', '8.3','8.4','8.5' ]
+        php-versions:
+          - '8.2'
+          - '8.3'
+          - '8.4'
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     steps:
@@ -56,10 +59,10 @@ jobs:
       - name: Run test suite
         run: composer run-script test
 
-#-----------------------------------------------------------------------------------------
+  #-----------------------------------------------------------------------------------------
   coverage:
     if: ${{ always() }}
-    needs: [build]
+    needs: [ build ]
 
     permissions:
       contents: write
