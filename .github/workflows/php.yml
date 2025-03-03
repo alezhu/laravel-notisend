@@ -2,10 +2,14 @@ name: CI
 
 on:
   push:
+    paths-ignore:
+      - 'README.md'
     branches-ignore:
       - 'dev'
       - 'code_coverage_badges'
   pull_request:
+    paths-ignore:
+      - 'README.md'
     branches-ignore:
       - 'dev'
       - 'code_coverage_badges'
