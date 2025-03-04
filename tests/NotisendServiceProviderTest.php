@@ -11,7 +11,7 @@ namespace {
          * @param string $path
          * @return string
          */
-        function config_path($path = ''): string
+        function config_path(string $path = ''): string
         {
             global $MOCK_APP_PATH;
             return implode(DIRECTORY_SEPARATOR, [$MOCK_APP_PATH, 'config', $path]);
@@ -25,6 +25,7 @@ namespace Alezhu\LaravelNotisend\Tests {
     use Alezhu\LaravelNotisend\NotisendServiceProvider;
     use Alezhu\LaravelNotisend\NotisendTransport;
     use ArrayAccess;
+    use Closure;
     use Illuminate\Contracts\Config\Repository;
     use Illuminate\Contracts\Foundation\Application;
     use Illuminate\Contracts\Foundation\CachesConfiguration;
@@ -104,7 +105,7 @@ namespace Alezhu\LaravelNotisend\Tests {
             $mail = Mockery::mock(MailManager::class);
             Mail::swap($mail);
             $mail->expects('extend')
-                ->with('notisend', Mockery::type(\Closure::class))
+                ->with('notisend', Mockery::type(Closure::class))
                 ->andReturns();
 
             $this->app->expects('runningInConsole')->andReturn(true);

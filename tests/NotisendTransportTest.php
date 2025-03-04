@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace Alezhu\LaravelNotisend\Tests;
 
@@ -9,6 +9,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Mail\Message;
 use Mockery;
 use Mockery\MockInterface;
 use Psr\Http\Message\StreamInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Header\UnstructuredHeader;
 use Symfony\Component\Mime\RawMessage;
 
 class NotisendTransportTest extends TestCase
@@ -49,16 +51,24 @@ class NotisendTransportTest extends TestCase
         $response->allows('status')
             ->andReturn(201);
 
-        $headers = [
+        $mockHeaders = [
             'id' =>  $this->faker->randomNumber(9),
             'status' =>  $this->faker->words(5, true),
         ];
         $response->expects('json')
-            ->andReturn($headers);
+            ->andReturn($mockHeaders);
 
         $result = $this->instance->send($email);
-        self::assertEquals($headers['id'], $result->getOriginalMessage()->getHeaders()->get('X-Notisend-MessageId')->getValue());
-        self::assertEquals($headers['status'], $result->getOriginalMessage()->getHeaders()->get('X-Notisend-Status')->getValue());
+
+        /** @var Message $origMessage */
+        $origMessage = $result->getOriginalMessage();
+        $headers = $origMessage->getHeaders();
+        /** @var UnstructuredHeader $xMessageId */
+        $xMessageId = $headers->get('X-Notisend-MessageId');
+        self::assertEquals($mockHeaders['id'], $xMessageId->getValue());
+        /** @var UnstructuredHeader $xStatus */
+        $xStatus = $headers->get('X-Notisend-Status');
+        self::assertEquals($mockHeaders['status'], $xStatus->getValue());
 
     }
 
@@ -92,17 +102,25 @@ class NotisendTransportTest extends TestCase
         $response->allows('status')
             ->andReturn(201);
 
-        $headers = [
+        $mockHeaders = [
             'id' =>  $this->faker->randomNumber(9),
             'status' =>  $this->faker->words(5, true),
         ];
         $response->expects('json')
-            ->andReturn($headers);
+            ->andReturn($mockHeaders);
 
 
         $result = $this->instance->send($email);
-        self::assertEquals($headers['id'], $result->getOriginalMessage()->getHeaders()->get('X-Notisend-MessageId')->getValue());
-        self::assertEquals($headers['status'], $result->getOriginalMessage()->getHeaders()->get('X-Notisend-Status')->getValue());
+
+        /** @var Message $origMessage */
+        $origMessage = $result->getOriginalMessage();
+        $headers = $origMessage->getHeaders();
+        /** @var UnstructuredHeader $xMessageId */
+        $xMessageId = $headers->get('X-Notisend-MessageId');
+        self::assertEquals($mockHeaders['id'], $xMessageId->getValue());
+        /** @var UnstructuredHeader $xStatus */
+        $xStatus = $headers->get('X-Notisend-Status');
+        self::assertEquals($mockHeaders['status'], $xStatus->getValue());
 
     }
 
