@@ -23,7 +23,7 @@ class NotisendServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
+    public function register(): void
     {
         parent::register();
         $publishablePath = $this->_getNotisendConfigPath();

@@ -25,16 +25,16 @@ class NotisendTransport extends AbstractTransport
         parent::__construct($dispatcher, $logger);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return 'notisend';
     }
 
     protected function doSend(SentMessage $message): void
     {
-        $base_url = $this->config[NotisendConsts::host->name];
-        $token = $this->config[NotisendConsts::api_token->name];
-        $payment = $this->config[NotisendConsts::payment->name];
+        $base_url = $this->config[NotisendConsts::HOST];
+        $token = $this->config[NotisendConsts::API_TOKEN];
+        $payment = $this->config[NotisendConsts::PAYMENT];
 
         $originalMessage = $message->getOriginalMessage();
         if (!($originalMessage instanceof Message)) {
@@ -60,10 +60,13 @@ class NotisendTransport extends AbstractTransport
         $attachments = $email->getAttachments();
         if ($attachments && count($attachments) > 0) {
             foreach ($attachments as $attachment) {
+                $headers  = $attachment->getPreparedHeaders();
+                $filename  = $headers->getHeaderParameter('Content-Disposition', 'filename');
+                $name  = $headers->getHeaderParameter('Content-Disposition', 'name') ?? $filename;
                 $request->attach(
-                    name: $attachment->getName(),
+                    name: $name,
                     contents: $attachment->getBody(),
-                    filename: $attachment->getFilename(),
+                    filename: $filename,
                     headers: $attachment->getHeaders()->toArray(),
                 );
             }

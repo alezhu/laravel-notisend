@@ -41,7 +41,7 @@ namespace Alezhu\LaravelNotisend\Tests {
     class NotisendServiceProviderTest extends TestCase
     {
 
-        private Application&Mockery\MockInterface $app;
+        private Application | Mockery\MockInterface $app;
         private NotisendServiceProvider $instance;
 
         public function test_boot_should_register_notisend_transport()

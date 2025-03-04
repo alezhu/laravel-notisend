@@ -28,17 +28,17 @@
     }
   },
   "require": {
-    "php": "^8.1",
+    "php": "~8.0.2",
     "ext-json": "*",
-    "illuminate/http": "^10",
-    "illuminate/mail": "^10"
+    "illuminate/http": "~9",
+    "illuminate/mail": "~9"
   },
   "require-dev": {
-    "alezhu/phpunit-array-contains-asserts": "^10.0",
+    "alezhu/phpunit-array-contains-asserts": "~9",
     "fakerphp/faker": "^1.24",
     "mockery/mockery": "^1.6",
     "phpoption/phpoption": "^1.9",
-    "phpunit/phpunit": "^10.0.7",
+    "phpunit/phpunit": "~9.5.8",
     "vlucas/phpdotenv": "^5.6"
   },
   "conflict": {

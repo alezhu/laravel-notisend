@@ -7,10 +7,10 @@
 [![Total Downloads](https://poser.pugx.org/alezhu/laravel-notisend/downloads)](https://packagist.org/packages/alezhu/laravel-notisend) 
 [![PHP Version Require](https://poser.pugx.org/alezhu/laravel-notisend/require/php)](https://packagist.org/packages/alezhu/laravel-notisend)
 [![Packagist Stars](https://img.shields.io/packagist/stars/alezhu/laravel-notisend)](https://packagist.org/packages/alezhu/laravel-notisend)
-![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?filter=v10*&label=version)
-[![CI](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml/badge.svg?branch=laravel-10)](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml)
-![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-10)
-[![Code coverage](../code_coverage_bages/coverage/coverage.laravel-10.svg)](../code_coverage_bages/coverage/coverage.main.svg)
+![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?filter=v9.*&label=version)
+[![CI](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml/badge.svg?branch=laravel-9)](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml)
+![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-9)
+[![Code coverage](../code_coverage_bages/coverage/coverage.laravel-9.svg)](../code_coverage_bages/coverage/coverage.main.svg)
 
 # Table of Contents
 
@@ -25,18 +25,18 @@
 
 ## Requirements
 
-- Laravel 10.0
-- PHP 8.1+
+- Laravel 9.0
+- PHP 8.0+
 - An API Key from [Notisend](https://app.notisend.ru/mailer/automation/api/messages)
 
-**For Laravel version below 10 see corresponding branches**
+**For Laravel version below 9 see corresponding branches**
 
 ## Setup
 
 You can install the package via composer:
 
 ```bash
-composer require alezhu/laravel-notisend:^10 
+composer require alezhu/laravel-notisend:^9 
 ```
 
 After that, you need to set `NOTISEND_API_TOKEN` in your `.env` file:
@@ -124,7 +124,7 @@ class ExampleTestManual extends TestCase
 }
 ```
 
-Please refer to [Laravel Mail documenation](https://laravel.com/docs/10.x/mail)
+Please refer to [Laravel Mail documenation](https://laravel.com/docs/9.x/mail)
 and [NotiSend API documentation](https://notisend.ru/dev/email/api/) for more information.
 
 <a name="support-and-feedback"></a>

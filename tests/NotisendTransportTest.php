@@ -24,7 +24,7 @@ class NotisendTransportTest extends TestCase
 {
     private array $config;
     private Generator $faker;
-    private Factory&Mockery\MockInterface $httpClient;
+    private Factory|MockInterface $httpClient;
     private NotisendTransport $instance;
     private string $token;
 
@@ -176,7 +176,7 @@ class NotisendTransportTest extends TestCase
         $this->instance->send(new RawMessage($this->faker->text()), new Envelope(new Address($this->faker->email()), [new Address($this->faker->email())]));
     }
 
-    public function test_stringify_sholud_return_notisend()
+    public function test_stringify_should_return_notisend()
     {
         $result = '' . $this->instance;
         self::assertSame($result, 'notisend');
@@ -192,11 +192,7 @@ class NotisendTransportTest extends TestCase
         return $result;
     }
 
-    /**
-     * @param PendingRequest&MockInterface $request
-     * @return void
-     */
-    protected function _prepareHttpClient(PendingRequest&Mockery\MockInterface $request): void
+    protected function _prepareHttpClient(PendingRequest | MockInterface $request): void
     {
         $this->httpClient->expects('baseUrl')
             ->with('https://api.notisend.ru/v1')
@@ -216,7 +212,7 @@ class NotisendTransportTest extends TestCase
         $this->faker = \Faker\Factory::create();
         $this->token = $this->faker->uuid();
         $this->httpClient = Mockery::mock(Factory::class);
-        $this->config = array_merge(require __DIR__ . '/../config/notisend.php', [NotisendConsts::api_token->name => $this->token]);
+        $this->config = array_merge(require __DIR__ . '/../config/notisend.php', [NotisendConsts::API_TOKEN => $this->token]);
         $this->instance = new NotisendTransport($this->httpClient, $this->config);
     }
 

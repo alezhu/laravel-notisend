@@ -3,7 +3,7 @@
 use Alezhu\LaravelNotisend\NotisendConsts;
 
 return [
-    NotisendConsts::api_token->name => env(NotisendConsts::api_token->value),
-    NotisendConsts::host->name => env(NotisendConsts::host->value, 'https://api.notisend.ru/v1'),
-    NotisendConsts::payment->name => env(NotisendConsts::payment->value, 'credit_priority'),
+    NotisendConsts::API_TOKEN => env(NotisendConsts::API_TOKEN_ENV),
+    NotisendConsts::HOST => env(NotisendConsts::HOST_ENV, 'https://api.notisend.ru/v1'),
+    NotisendConsts::PAYMENT => env(NotisendConsts::PAYMENT_ENV, 'credit_priority'),
 ];
