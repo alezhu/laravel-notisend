@@ -18,3 +18,4 @@ composer.phar
 /.idea/vagrant.xml
 /.idea/vcs.xml
 /.phpunit.cache
+/.phpunit.result.cache
