@@ -23,15 +23,18 @@ namespace {
 namespace Alezhu\LaravelNotisend\Tests {
 
     use Alezhu\LaravelNotisend\NotisendServiceProvider;
+    use Alezhu\LaravelNotisend\NotisendTransport;
     use ArrayAccess;
     use Illuminate\Contracts\Config\Repository;
     use Illuminate\Contracts\Foundation\Application;
     use Illuminate\Contracts\Foundation\CachesConfiguration;
+    use Illuminate\Http\Client\Factory;
+    use Illuminate\Mail\Mailer;
     use Illuminate\Mail\MailManager;
     use Illuminate\Support\Facades\Facade;
+    use Illuminate\Support\Facades\Http;
     use Illuminate\Support\Facades\Mail;
     use Mockery;
-    use Mockery\MockInterface;
 
 
     class NotisendServiceProviderTest extends TestCase
@@ -42,15 +45,58 @@ namespace Alezhu\LaravelNotisend\Tests {
 
         public function test_boot_should_register_notisend_transport()
         {
-            $mail = Mockery::mock(MailManager::class);
+
+            $mail = Mockery::mock(MailManager::class, [$this->app]);
+            $mail->makePartial();
             Mail::swap($mail);
-            $mail->expects('extend')
-                ->with('notisend', Mockery::type(\Closure::class))
-                ->andReturns();
 
             $this->app->expects('runningInConsole')->andReturn(false);
 
+            $config = Mockery::mock(Repository::class, ArrayAccess::class);
+
+            $this->app->allows('offsetGet')
+                ->with('config')
+                ->andReturn($config);
+
+            $config->expects('offsetGet')
+                ->with('mail.driver')
+                ->andReturnNull();
+
+            $notisend = require implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'config', 'notisend.php']);
+            $notisend['transport'] = 'notisend';
+
+            $config->expects('offsetGet')
+                ->with('mail.mailers.notisend')
+                ->andReturn($notisend);
+
+            $this->app->expects('offsetGet')
+                ->with('view')
+                ->andReturn(Mockery::mock(\Illuminate\Contracts\View\Factory::class));
+
+            $this->app->expects('offsetGet')
+                ->with('events')
+                ->andReturnNull();
+
+            $http = Mockery::mock(Factory::class);
+            Http::swap($http);
+
+            $this->app->expects('bound')
+                ->with('queue')
+                ->andReturnNull();
+
+            foreach (['from', 'reply_to', 'to', 'return_path'] as $type) {
+                $config->expects('offsetGet')
+                    ->with('mail.' . $type)
+                    ->andReturnNull();
+            }
+
+
             $this->instance->boot();
+
+            $result = $mail->mailer('notisend');
+            self::assertInstanceOf(Mailer::class, $result);
+            self::assertInstanceOf(NotisendTransport::class, $result->getSymfonyTransport());
+
         }
 
         public function test_boot_should_register_publishers_when_run_in_console()
@@ -103,6 +149,26 @@ namespace Alezhu\LaravelNotisend\Tests {
             $this->instance->register();
         }
 
+        public function test_register_should_merge_configuration()
+        {
+            $notisend = require implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'config', 'notisend.php']);
+            $this->app->expects('configurationIsCached')->andReturns(false);
+
+            $config = Mockery::mock(Repository::class, ArrayAccess::class);
+            $this->_prepareMergeConfig($config, $notisend);
+
+
+            $config->expects('has')
+                ->with('mail.mailers.notisend')
+                ->andReturn(true);
+
+            $config->expects('has')
+                ->with('mail.mailers.notisend.transport')
+                ->andReturn(true);
+
+            $this->instance->register();
+        }
+
         public function test_register_should_set_transport_in_mail_mailers_notisend_config()
         {
             $notisend = require implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'config', 'notisend.php']);
@@ -123,26 +189,6 @@ namespace Alezhu\LaravelNotisend\Tests {
             $config->expects('set')
                 ->with('mail.mailers.notisend.transport', 'notisend')
                 ->andReturns();
-
-            $this->instance->register();
-        }
-
-        public function test_register_should_merge_configuration()
-        {
-            $notisend = require implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'config', 'notisend.php']);
-            $this->app->expects('configurationIsCached')->andReturns(false);
-
-            $config = Mockery::mock(Repository::class, ArrayAccess::class);
-            $this->_prepareMergeConfig($config, $notisend);
-
-
-            $config->expects('has')
-                ->with('mail.mailers.notisend')
-                ->andReturn(true);
-
-            $config->expects('has')
-                ->with('mail.mailers.notisend.transport')
-                ->andReturn(true);
 
             $this->instance->register();
         }
