@@ -28,6 +28,7 @@ jobs:
       matrix:
         operating-system: [ ubuntu-latest ]
         php-versions:
+          - '8.1'
           - '8.2'
           - '8.3'
           - '8.4'
@@ -82,7 +83,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.1'
           coverage: xdebug
 
       - name: Cache Composer packages

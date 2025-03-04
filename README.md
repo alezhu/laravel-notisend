@@ -4,13 +4,13 @@
 
 
 [![License](https://poser.pugx.org/alezhu/laravel-notisend/license)](https://packagist.org/packages/alezhu/laravel-notisend) 
-[![Code coverage](../code_coverage_bages/coverage/coverage.laravel-11.svg)](../code_coverage_bages/coverage/coverage.main.svg)
-![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?filter=v11*&label=version)
 [![Total Downloads](https://poser.pugx.org/alezhu/laravel-notisend/downloads)](https://packagist.org/packages/alezhu/laravel-notisend) 
 [![PHP Version Require](https://poser.pugx.org/alezhu/laravel-notisend/require/php)](https://packagist.org/packages/alezhu/laravel-notisend)
-![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-11)
 [![Packagist Stars](https://img.shields.io/packagist/stars/alezhu/laravel-notisend)](https://packagist.org/packages/alezhu/laravel-notisend)
-[![CI](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml/badge.svg?branch=laravel-11)](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml)
+![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?filter=v10*&label=version)
+[![CI](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml/badge.svg?branch=laravel-10)](https://github.com/alezhu/laravel-notisend/actions/workflows/php.yml)
+![GitHub branch status](https://img.shields.io/github/checks-status/alezhu/laravel-notisend/laravel-10)
+[![Code coverage](../code_coverage_bages/coverage/coverage.laravel-10.svg)](../code_coverage_bages/coverage/coverage.main.svg)
 
 # Table of Contents
 
@@ -25,18 +25,18 @@
 
 ## Requirements
 
-- Laravel 11.0
-- PHP 8.2+
+- Laravel 10.0
+- PHP 8.1+
 - An API Key from [Notisend](https://app.notisend.ru/mailer/automation/api/messages)
 
-**For Laravel version below 11 see corresponding branches**
+**For Laravel version below 10 see corresponding branches**
 
 ## Setup
 
 You can install the package via composer:
 
 ```bash
-composer require alezhu/laravel-notisend:^11 
+composer require alezhu/laravel-notisend:^10 
 ```
 
 After that, you need to set `NOTISEND_API_TOKEN` in your `.env` file:
@@ -124,7 +124,7 @@ class ExampleTestManual extends TestCase
 }
 ```
 
-Please refer to [Laravel Mail documenation](https://laravel.com/docs/11.x/mail)
+Please refer to [Laravel Mail documenation](https://laravel.com/docs/10.x/mail)
 and [NotiSend API documentation](https://notisend.ru/dev/email/api/) for more information.
 
 <a name="support-and-feedback"></a>
