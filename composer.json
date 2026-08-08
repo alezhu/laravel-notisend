@@ -44,9 +44,9 @@
   "config": {
     "sort-packages": true,
     "audit": {
-      "ignore": [
-        "PKSA-zwc5-qtrz-zm1n"
-      ]
+      "ignore": {
+        "PKSA-zwc5-qtrz-zm1n": "Ignored security advisory to allow tests to pass on affected Laravel versions"
+      }
     },
     "env": {
       "XDEBUG_MODE": "coverage"
