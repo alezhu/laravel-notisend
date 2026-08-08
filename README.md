@@ -24,11 +24,9 @@
 
 ## Requirements
 
-- Laravel 12.0+
+- Laravel 9.0+ / 10.0+ / 11.0+ / 12.0+
 - PHP 8.2+
 - An API Key from [Notisend](https://app.notisend.ru/mailer/automation/api/messages)
-
-**For Laravel version below 12 see corresponding branches**
 
 ## Setup
 
