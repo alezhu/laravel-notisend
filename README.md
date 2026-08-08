@@ -3,7 +3,7 @@
 [Notisend](https://notisend.ru) Laravel driver
 
 [![License](https://poser.pugx.org/alezhu/laravel-notisend/license)](https://packagist.org/packages/alezhu/laravel-notisend) 
-[![Code coverage](../code_coverage_bages/coverage/coverage.svg)](https://packagist.org/packages/alezhu/laravel-notisend) 
+[![Coverage Status](https://coveralls.io/repos/github/alezhu/laravel-notisend/badge.svg?branch=main)](https://coveralls.io/github/alezhu/laravel-notisend?branch=main) 
 [![GitHub Tag](https://img.shields.io/github/v/tag/alezhu/laravel-notisend?label=version)](https://packagist.org/packages/alezhu/laravel-notisend) 
 [![Total Downloads](https://poser.pugx.org/alezhu/laravel-notisend/downloads)](https://packagist.org/packages/alezhu/laravel-notisend) 
 [![PHP Version Require](https://poser.pugx.org/alezhu/laravel-notisend/require/php)](https://packagist.org/packages/alezhu/laravel-notisend)

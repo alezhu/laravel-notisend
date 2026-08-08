@@ -6,13 +6,11 @@ on:
       - 'README.md'
     branches-ignore:
       - 'dev'
-      - 'code_coverage_badges'
   pull_request:
     paths-ignore:
       - 'README.md'
     branches-ignore:
       - 'dev'
-      - 'code_coverage_badges'
 
 permissions:
   contents: read
@@ -105,46 +103,9 @@ jobs:
 
 
 
-      # Шаг 2: Проверяем существование целевой ветки
-      - name: Check if code_coverage_bages branch exists
-        id: check_branch
-        run: |
-          git fetch origin --quiet
-          if git rev-parse --verify refs/remotes/origin/code_coverage_bages >/dev/null 2>&1; then
-            echo "branch_exists=true" >> $GITHUB_ENV
-          else
-            echo "branch_exists=false" >> $GITHUB_ENV
-          fi          
-
-      # Создаем ветку code_coverage_bages, если её нет
-      - name: Create code_coverage_bages branch if Not Exists
-        if: env.branch_exists == 'false'
-        run: |
-          git checkout --orphan code_coverage_bages
-          git rm -rf .
-          echo "Created new branch: code_coverage_bages"   
-
-      # Шаг 4: Переключаемся на целевую ветку
-      - name: Switch to Target Branch
-        if: env.branch_exists == 'true'
-        run: git checkout code_coverage_bages
-
-      - name: Make code coverage badge
-        uses: timkrase/phpunit-coverage-badge@v1.2.1
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2
         with:
-          report: coverage/coverage.xml
-          coverage_badge_path: coverage/coverage.svg
-          push_badge: false
-
-      # Шаг 6: Коммитим изменения
-      - name: Commit Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add coverage/coverage.svg
-          git commit -m "Update coverage/coverage.svg via GitHub Actions" || exit 0
-
-      # Шаг 7: Пушим изменения в целевую ветку
-      - name: Push Changes
-        run: |
-          git push origin code_coverage_bages --force
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/coverage.xml
+          format: clover
