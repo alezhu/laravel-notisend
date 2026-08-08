@@ -75,7 +75,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "illuminate/http:${{ matrix.laravel }}" "illuminate/mail:${{ matrix.laravel }}" --no-interaction --no-update
-          composer update --${{ matrix.dependencies }} --prefer-dist --no-progress
+          composer update --${{ matrix.dependencies }} --prefer-dist --no-progress --no-audit
 
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md
