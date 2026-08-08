@@ -5,7 +5,6 @@ on:
     paths-ignore:
       - '**.md'
       - 'version.txt'
-      - '.github/**'
       - 'LICENSE'
       - '.gitignore'
     branches-ignore:
@@ -14,7 +13,6 @@ on:
     paths-ignore:
       - '**.md'
       - 'version.txt'
-      - '.github/**'
       - 'LICENSE'
       - '.gitignore'
     branches-ignore:
