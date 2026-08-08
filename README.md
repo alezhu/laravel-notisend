@@ -24,7 +24,7 @@
 
 ## Requirements
 
-- Laravel 9.0+ / 10.0+ / 11.0+ / 12.0+
+- Laravel 9.0+ / 10.0+ / 11.0+ / 12.0+ / 13.0+
 - PHP 8.2+
 - An API Key from [Notisend](https://app.notisend.ru/mailer/automation/api/messages)
 
@@ -121,7 +121,7 @@ class ExampleTestManual extends TestCase
 }
 ```
 
-Please refer to [Laravel Mail documenation](https://laravel.com/docs/12.x/mail)
+Please refer to [Laravel Mail documenation](https://laravel.com/docs/13.x/mail)
 and [NotiSend API documentation](https://notisend.ru/dev/email/api/) for more information.
 
 <a name="support-and-feedback"></a>
