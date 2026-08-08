@@ -74,9 +74,6 @@ jobs:
     permissions:
       contents: write
 
-    env:
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-
     runs-on: ubuntu-latest
 
     steps:
@@ -136,7 +133,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: coverage/coverage.xml
-          coverage_badge_path: coverage/coverage.${{ env.BRANCH_NAME }}.svg
+          coverage_badge_path: coverage/coverage.svg
           push_badge: false
 
       # Шаг 6: Коммитим изменения
@@ -144,8 +141,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add coverage/coverage.${{ env.BRANCH_NAME }}.svg
-          git commit -m "Update coverage/coverage.${{ env.BRANCH_NAME }}.svg via GitHub Actions" || exit 0
+          git add coverage/coverage.svg
+          git commit -m "Update coverage/coverage.svg via GitHub Actions" || exit 0
 
       # Шаг 7: Пушим изменения в целевую ветку
       - name: Push Changes
