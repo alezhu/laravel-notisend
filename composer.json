@@ -43,9 +43,6 @@
   },
   "config": {
     "sort-packages": true,
-    "platform": {
-      "php": "8.2.0"
-    },
     "audit": {
       "ignore": [
         "PKSA-zwc5-qtrz-zm1n"
