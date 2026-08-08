@@ -71,8 +71,10 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php-versions }}-laravel-${{ matrix.laravel }}-${{ matrix.dependencies }}-
 
       - name: Install dependencies
+        env:
+          COMPOSER_NO_AUDIT: 1
         run: |
-          composer require "illuminate/http:${{ matrix.laravel }}" "illuminate/mail:${{ matrix.laravel }}" --no-interaction --no-update
+          composer require "illuminate/http:${{ matrix.laravel }}" "illuminate/mail:${{ matrix.laravel }}" --no-interaction --no-update --no-audit
           composer update --${{ matrix.dependencies }} --prefer-dist --no-progress --no-audit
 
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
