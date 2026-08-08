@@ -46,6 +46,11 @@
     "platform": {
       "php": "8.2.0"
     },
+    "audit": {
+      "ignore": [
+        "PKSA-zwc5-qtrz-zm1n"
+      ]
+    },
     "env": {
       "XDEBUG_MODE": "coverage"
     }

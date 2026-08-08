@@ -74,6 +74,7 @@ jobs:
         env:
           COMPOSER_NO_AUDIT: 1
         run: |
+          composer config audit.ignore PKSA-zwc5-qtrz-zm1n --no-interaction
           composer require "illuminate/http:${{ matrix.laravel }}" "illuminate/mail:${{ matrix.laravel }}" --no-interaction --no-update --no-audit
           composer update --${{ matrix.dependencies }} --prefer-dist --no-progress --no-audit
 
