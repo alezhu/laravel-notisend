@@ -37,10 +37,19 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+        laravel:
+          - '9.*'
+          - '10.*'
+          - '11.*'
+          - '12.*'
+          - '13.*'
         dependencies:
           - 'prefer-lowest'
           - 'prefer-stable'
-    name: PHP ${{ matrix.php-versions }} (${{ matrix.dependencies }}) Test on ${{ matrix.operating-system }}
+        exclude:
+          - php-versions: '8.2'
+            laravel: '13.*'
+    name: PHP ${{ matrix.php-versions }} - Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }}) Test on ${{ matrix.operating-system }}
 
     steps:
       - uses: actions/checkout@v7
@@ -59,12 +68,14 @@ jobs:
         uses: actions/cache@v6
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-php-${{ matrix.php-versions }}-laravel-${{ matrix.laravel }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ matrix.dependencies }}-
+            ${{ runner.os }}-php-${{ matrix.php-versions }}-laravel-${{ matrix.laravel }}-${{ matrix.dependencies }}-
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependencies }} --prefer-dist --no-progress
+        run: |
+          composer require "illuminate/http:${{ matrix.laravel }}" "illuminate/mail:${{ matrix.laravel }}" --no-interaction --no-update
+          composer update --${{ matrix.dependencies }} --prefer-dist --no-progress
 
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md
